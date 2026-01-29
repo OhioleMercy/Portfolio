@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercy - UI/UX Designer</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Squada+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-main: #0B0F14;
+            --bg-section: #11161D;
+            --glass-bg: rgba(255,196,204,0.08);
+            --primary: #FB8695;
+            --secondary: #FFFFFF;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --border: rgba(255,255,255,0.08);
+            --desktop-margin: 30px;
+            --mobile-margin: 20px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - var(--desktop-margin) * 2);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem 1rem;
+            z-index: 1000;
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            height: 50px;
+        }
+
+        nav .logo img {
+            height: 100%;
+            width: auto;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+            transition: all 0.3s;
+        }
+
+        .menu-toggle:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 50px 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(108,92,231,0.15), transparent);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0,229,255,0.1), transparent);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        /* Hero Text Animation */
+        .hero-content {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: bounceIn 1s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        .hero-content h1 {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: bounceIn 0.8s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        .hero-content h1:nth-child(2) {
+            animation-delay: 0.7s;
+        }
+
+        .hero-content p {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: bounceIn 0.8s ease-out forwards;
+            animation-delay: 0.9s;
+        }
+
+        .hero-buttons {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: bounceIn 0.8s ease-out forwards;
+            animation-delay: 1.1s;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translateY(-10px) scale(1.02);
+            }
+            80% {
+                opacity: 0.9;
+                transform: translateY(5px) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .hero .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 5.5rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            line-height: 1;
+            font-family: 'Squada One', 'Inter', sans-serif;
+        }
+
+        .hero-content .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        /* Updated Button Styles */
+        .btn {
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            border-top-right-radius: 12px;
+            border-bottom-left-radius: 12px;
+            border-top-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 30px rgba(251, 134, 149, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(251, 134, 149, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(251, 134, 149, 0.5); }
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(251, 134, 149, 0.6);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            color: white;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(251, 134, 149, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Footer Styles */
+        .site-footer {
+            background: rgba(255, 196, 204, 0.08);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 4rem 5%;
+            text-align: center;
+            border-radius: 0;
+            margin-top: 6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-copy {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            border-radius: 24px;
+            animation: float 6s ease-in-out infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-img {
+            width: 100%;
+            border-radius: 16px;
+            aspect-ratio: 1;
+            display: block;
+            transform: scale(0.95);
+            transform-origin: center;
+            box-shadow: none;
+            object-fit: cover;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem calc(var(--desktop-margin) + 5%) 6rem;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            font-family: 'DM Sans', 'Inter', sans-serif;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Tools Section */
+        .tools-carousel-container {
+            padding: 3rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tools-carousel-container .section-title {
+            color: var(--text-primary);
+        }
+
+        .tools-carousel {
+            display: flex;
+            gap: 0;
+            animation: scroll 30s linear infinite;
+            width: max-content;
+        }
+
+        .tools-carousel:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .tool-card {
+            flex: 0 0 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: transparent;
+            border: none;
+        }
+
+        .tool-icon {
+            width: auto;
+            height: 40px;
+            transition: transform 0.3s;
+        }
+
+        .tool-card:hover .tool-icon {
+            transform: scale(1.1);
+        }
+
+        .tool-name {
+            display: none;
+        }
+
+        /* About Section - Center aligned */
+        .about-cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .about-card {
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .about-card-center {
+            transform: translateY(-30px);
+            padding: 3.5rem 3rem;
+        }
+
+        .about-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        .about-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .skills-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .skills-list li {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Work Section */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+        }
+
+        .project-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: 0 0 40px rgba(251, 134, 149, 0.4);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            flex-shrink: 0;
+            padding: 20px 20px 0 20px;
+            background: var(--glass-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: scale-down;
+            object-position: center center;
+            display: block;
+            transition: transform 0.5s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+
+        .project-info {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-info h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-info p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        /* Project button */
+        .project-info .btn {
+            align-self: flex-start;
+            width: auto;
+            min-width: 180px;
+        }
+
+        /* My Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .skill-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(251, 134, 149, 0.3);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .skill-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Why Me Section */
+        .why-me-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .why-me-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 0.5px solid var(--secondary);
+            border-radius: 24px;
+            padding: 2rem 2rem;
+            position: relative;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: orbitalGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes orbitalGlow {
+            0% {
+                box-shadow: 
+                    15px 0 30px rgba(251, 134, 149, 0.2),
+                    -15px 0 15px rgba(251, 134, 149, 0.05);
+                border-color: rgba(245, 239, 239, 0.3);
+            }
+            25% {
+                box-shadow: 
+                    0 15px 30px rgba(251, 134, 149, 0.25),
+                    0 -15px 15px rgba(251, 134, 149, 0.08);
+                border-color: rgba(245, 239, 239, 0.4);
+            }
+            50% {
+                box-shadow: 
+                    -15px 0 30px rgba(251, 134, 149, 0.2),
+                    15px 0 15px rgba(251, 134, 149, 0.05);
+                border-color: rgba(245, 239, 239, 0.3);
+            }
+            75% {
+                box-shadow: 
+                    0 -15px 30px rgba(251, 134, 149, 0.25),
+                    0 15px 15px rgba(251, 134, 149, 0.08);
+                border-color: rgba(245, 239, 239, 0.4);
+            }
+            100% {
+                box-shadow: 
+                    15px 0 30px rgba(251, 134, 149, 0.2),
+                    -15px 0 15px rgba(251, 134, 149, 0.05);
+                border-color: rgba(245, 239, 239, 0.3);
+            }
+        }
+
+        .why-me-intro {
+            font-size: 1.4rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .why-me-quote {
+            text-align: center;
+        }
+
+        .quote-text {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .quote-subtext {
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        .why-me-highlight h4 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .why-me-highlight p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .why-me-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .why-me-buttons .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            flex: 1 1 45%;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        /* Case Study Styles */
+        .case-hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            background: var(--bg-main);
+        }
+
+        .case-hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .case-hero p {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .case-mockup {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            box-shadow: 0 20px 60px rgba(108,92,231,0.4);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .case-section {
+            padding: 4rem 5%;
+            background: var(--bg-section);
+        }
+
+        .case-section:nth-child(even) {
+            background: var(--bg-main);
+        }
+
+        .case-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .case-section p, .case-section li {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .case-section ul {
+            margin-left: 2rem;
+            margin-top: 1rem;
+        }
+
+        .case-section li {
+            margin-bottom: 0.75rem;
+        }
+
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .flow-step {
+            background: var(--glass-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: 700;
+        }
+
+        .screens-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .screen-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: grid;
+            grid-template-columns: 70% 30%;
+            align-items: center;
+        }
+
+        .screen-card:nth-child(odd) {
+            direction: ltr;
+        }
+
+        .screen-card:nth-child(even) {
+            direction: rtl;
+        }
+
+        .screen-card:nth-child(even) .screen-content {
+            direction: ltr;
+            text-align: left;
+        }
+
+        .screen-card:nth-child(odd) .screen-content {
+            text-align: left;
+        }
+
+        .screen-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(251, 134, 149, 0.2);
+        }
+
+        .screen-icon {
+            width: 100%;
+            height: 700px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .screen-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .screen-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .screen-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .screen-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .about-cards-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .about-card-center {
+                transform: translateY(0);
+            }
+            
+            .work-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+                margin-bottom: 3rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .why-me-intro {
+                font-size: 1.3rem;
+            }
+
+            .quote-text {
+                font-size: 1.6rem;
+            }
+            
+            .hero {
+                padding: 8rem 30px 4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Screen margins for mobile */
+            nav {
+                width: calc(100% - 40px);
+                padding: 1rem 1.5rem;
+                top: 10px;
+            }
+            
+            .hero, section {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            
+            .hero {
+                padding-top: 6rem;
+                padding-bottom: 2rem;
+                min-height: auto;
+            }
+            
+            /* Improved Mobile Menu Toggle */
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid var(--border);
+                transition: all 0.3s ease;
+            }
+            
+            .menu-toggle:hover {
+                background: rgba(251, 134, 149, 0.2);
+                border-color: var(--primary);
+                transform: scale(1.05);
+            }
+            
+            .menu-toggle.active {
+                background: rgba(251, 134, 149, 0.2);
+                border-color: var(--primary);
+            }
+            
+            /* IMPROVED RIGHT-ALIGNED MOBILE NAVIGATION MENU */
+            nav ul {
+                position: fixed;
+                top: 80px;
+                right: 20px; /* Changed from left: 20px to right: 20px */
+                width: 280px; /* Fixed width for right-aligned dropdown */
+                background: rgba(17, 22, 29, 0.95); /* Solid dark background */
+                backdrop-filter: blur(40px); /* Increased blur */
+                -webkit-backdrop-filter: blur(40px);
+                border: 1px solid rgba(251, 134, 149, 0.3); /* Pink border */
+                border-radius: 20px;
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.2rem;
+                text-align: right; /* Right aligned text */
+                transform: translateX(100%); /* Slide in from right */
+                opacity: 0;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 999;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+                max-height: 80vh; /* Limit height */
+                overflow-y: auto; /* Scroll if needed */
+            }
+            
+            nav ul.active {
+                transform: translateX(0); /* Slide to normal position */
+                opacity: 1;
+            }
+            
+            nav ul li {
+                width: 100%;
+            }
+            
+            nav ul a {
+                display: block;
+                padding: 1rem 1.5rem;
+                font-size: 1.1rem;
+                font-weight: 600;
+                border-radius: 12px;
+                transition: all 0.3s ease;
+                text-align: right; /* Right aligned text */
+            }
+            
+            nav ul a:hover {
+                background: rgba(251, 134, 149, 0.15);
+                color: var(--primary);
+                transform: translateX(-5px); /* Move slightly left on hover */
+                text-align: right;
+            }
+            
+            nav ul a::after {
+                display: none;
+            }
+            
+            /* Overlay background when menu is open */
+            .menu-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7); /* Dark overlay */
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                z-index: 998;
+            }
+            
+            .menu-overlay.active {
+                display: block;
+            }
+            
+            nav a {
+                font-size: 1.1rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 3rem;
+                line-height: 1.1;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+            
+            .work-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .project-card {
+                margin-bottom: 1rem;
+            }
+            
+            .project-image {
+                height: 250px;
+                padding: 15px 15px 0 15px;
+            }
+            
+            .project-info .btn {
+                width: 100%;
+                max-width: none;
+                align-self: stretch;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 2.5rem;
+            }
+            
+            .about-card, .about-card-center {
+                padding: 2rem 1.5rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .skill-card {
+                padding: 2rem;
+            }
+
+            .why-me-card {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .why-me-intro {
+                font-size: 1.2rem;
+                margin-bottom: 2rem;
+            }
+
+            .quote-text {
+                font-size: 1.5rem;
+                margin: 1.5rem 0;
+            }
+
+            .why-me-highlight {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+
+            .why-me-buttons {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+                margin-top: 2rem;
+            }
+
+            .why-me-buttons .btn {
+                width: 100%;
+                max-width: none;
+            }
+            
+            .tool-card {
+                flex: 0 0 120px;
+                padding: 1rem;
+            }
+            
+            .tool-icon {
+                height: 30px;
+            }
+            
+            .case-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .case-hero p {
+                font-size: 1.2rem;
+            }
+            
+            .case-section {
+                padding: 3rem 20px;
+            }
+            
+            .case-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .screens-grid {
+                gap: 2rem;
+            }
+            
+            .screen-card {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+            
+            .screen-icon {
+                height: 300px;
+                margin-bottom: 1.5rem;
+            }
+            
+            .screen-card:nth-child(odd),
+            .screen-card:nth-child(even) {
+                direction: ltr;
+            }
+            
+            .screen-card .screen-content {
+                text-align: center !important;
+                direction: ltr !important;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .site-footer {
+                padding: 3rem 20px;
+                margin-top: 4rem;
+            }
+            
+            .hero::before, .hero::after {
+                width: 300px;
+                height: 300px;
+                opacity: 0.5;
+            }
+            
+            .hero::before {
+                top: -10%;
+                right: -10%;
+            }
+            
+            .hero::after {
+                bottom: -10%;
+                left: -10%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+            
+            .project-image {
+                height: 200px;
+                padding: 10px 10px 0 10px;
+            }
+            
+            .project-info {
+                padding: 1.5rem;
+            }
+            
+            .project-info h3 {
+                font-size: 1.5rem;
+            }
+
+            .skill-card {
+                padding: 1.5rem;
+            }
+
+            .skill-icon {
+                font-size: 2.5rem;
+            }
+
+            .why-me-card {
+                padding: 2rem 1rem;
+            }
+
+            .why-me-intro {
+                font-size: 1.1rem;
+            }
+
+            .quote-text {
+                font-size: 1.3rem;
+            }
+
+            .why-me-highlight h4 {
+                font-size: 1.2rem;
+            }
+            
+            .contact-glass {
+                padding: 2rem 1rem;
+            }
+            
+            .contact-glass h2 {
+                font-size: 1.8rem;
+            }
+            
+            .contact-glass .email {
+                font-size: 1.2rem;
+                margin: 1.5rem 0;
+            }
+            
+            section {
+                padding: 4rem 20px 3rem;
+            }
+            
+            .screen-icon {
+                height: 250px;
+            }
+            
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .hero-buttons .btn {
+                padding: 1rem 1.5rem;
+            }
+            
+            /* Mobile menu improvements for small screens */
+            nav ul {
+                width: 250px; /* Slightly smaller on very small screens */
+                right: 15px;
+                padding: 1.5rem;
+                gap: 1rem;
+            }
+            
+            nav ul a {
+                padding: 0.8rem 1.2rem;
+                font-size: 1rem;
+            }
+            
+            .menu-toggle {
+                width: 40px;
+                height: 40px;
+                font-size: 1.3rem;
+            }
+        }
+
+        .cover {
+            width: 100%;
+            aspect-ratio: 16/4;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .cover img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Menu Overlay -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+<!-- Navigation -->
+<nav>
+    <div class="container">
+        <div class="logo">
+            <img src="Assets/Logo.png" alt="Mercy's Logo">
+        </div>
+        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul id="navMenu">
+            <li><a href="#home" onclick="showPage('home'); toggleMenu(); return false;">Home</a></li>
+            <li><a href="#about-section" onclick="scrollToSection('about-section'); toggleMenu(); return false;">About</a></li>
+            <li><a href="#work-section" onclick="scrollToSection('work-section'); toggleMenu(); return false;">Work</a></li>
+            <li><a href="#skills-section" onclick="scrollToSection('skills-section'); toggleMenu(); return false;">My Skills</a></li>
+            <li><a href="#why-section" onclick="scrollToSection('why-section'); toggleMenu(); return false;">Why Me</a></li>
+            <li><a href="https://www.linkedin.com/in/mercy-ohiole/" onclick="scrollToSection('contact-section'); toggleMenu(); return false;">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Hi, I'm Mercy,</h1> 
+                <h1> a <span class="gradient-text">UI/UX Designer </h1>
+                <p>I design digital products that balance Beauty, Usability, and Business goals.</p>
+                <div class="hero-buttons">
+                    <a href="#work-section" onclick="scrollToSection('work-section'); return false;" class="btn btn-primary">View My Work</a>
+                    <a href="https://www.linkedin.com/in/mercy-ohiole/" onclick="scrollToSection('contact-section'); return false;" class="btn btn-secondary">Contact Me</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="glass-card">
+                    <img src="Assets/profilePic.png" class="profile-img" alt="Mercy - UI/UX Designer">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="tools-carousel-container">
+        <h2 class="section-title">Tools I Use</h2>
+        <div class="tools-carousel">
+            <!-- First set -->
+            <div class="tool-card">
+                <img class="tool-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/trello/trello-plain.svg" alt="Trello">
+            </div>
+            <div class="tool-card">
+                <img class="tool-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma">
+            </div>
+            <div class="tool-card">
+                <img class="tool-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/slack/slack-original.svg" alt="Slack">
+            </div>
+            <div class="tool-card">
+                <img class="tool-icon" src="https://www.gstatic.com/meet/google_meet_horizontal_wordmark_2020q4_1x_icon_124_40_2373e79660dabbf194273d27aa7ee1f5.png" alt="Google Meet">
+            </div>
+            <div class="tool-card">
+                <svg class="tool-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="8" fill="#2D8CFF"/>
+                    <text x="24" y="30" fill="white" font-size="16" font-weight="bold" text-anchor="middle" font-family="Arial">ZOOM</text>
+                </svg>
+            </div>
+            <div class="tool-card">
+                <svg class="tool-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="18" cy="18" r="4" fill="#FC636B"/>
+                    <circle cx="30" cy="18" r="4" fill="#FFA32D"/>
+                    <circle cx="24" cy="30" r="4" fill="#6FC8CE"/>
+                </svg>
+            </div>
+            <div class="tool-card">
+                <img class="tool-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/notion/notion-original.svg" alt="Notion">
+            </div>
+            <!-- Duplicate set for infinite scroll -->
+            <div class="tool-card">
+                <img class="tool-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/trello/trello-plain.svg" alt="Trello">
+            </div>
+            <div class="tool-card">
+                <img class="tool-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma">
+            </div>
+            <div class="tool-card">
+                <img class="tool-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/slack/slack-original.svg" alt="Slack">
+            </div>
+            <div class="tool-card">
+                <img class="tool-icon" src="https://www.gstatic.com/meet/google_meet_horizontal_wordmark_2020q4_1x_icon_124_40_2373e79660dabbf194273d27aa7ee1f5.png" alt="Google Meet">
+            </div>
+            <div class="tool-card">
+                <svg class="tool-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="8" fill="#2D8CFF"/>
+                    <text x="24" y="30" fill="white" font-size="16" font-weight="bold" text-anchor="middle" font-family="Arial">ZOOM</text>
+                </svg>
+            </div>
+            <div class="tool-card">
+                <svg class="tool-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="18" cy="18" r="4" fill="#FC636B"/>
+                    <circle cx="30" cy="18" r="4" fill="#FFA32D"/>
+                    <circle cx="24" cy="30" r="4" fill="#6FC8CE"/>
+                </svg>
+            </div>
+            <div class="tool-card">
+                <img class="tool-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/notion/notion-original.svg" alt="Notion">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about-section">
+        <div class="container">
+            <h2 class="section-title">A little About Me</h2>
+            
+                <div class="about-card">
+                       <!-- 
+ <h3>My experience</h3>
+                     <p>With over two years of professional UI/UX design experience at Rogue Dev & Mentorship For Acceleration, my path is built on a dual foundation: the technical precision of web development at Khemsafe and the human-centric creativity of User Centered design. This unique blend ensures I craft solutions that are both functional and deeply user-focused.</p>                </div>
+                <div class="about-card about-card-center">
+                    <h3>My Background</h3>-->
+<p>I'm Mercy Ohiole, a UI/UX designer with a unique foundation. My professional path spans tech and business, from early experiences in sales and web development at <strong>Khemsafe communications Limited</strong>  to over two years honing my craft in professional UI/UX design at <strong>Rogue Dev</strong> and <strong>Mentorship for Acceleration</strong>. This journey has crystalized my core principle: people crave simplicity and connection. I now dedicate my skills to designing products that feel effortlessly intuitive, visually compelling, and focused on solving real human problems.</p>
+                <!--<div class="about-card">
+                    <h3>My skills</h3>
+                    <ul class="skills-list">
+                        <li>User Research</li>
+                        <li>Wireframing</li>
+                        <li>Design Systems</li>
+                        <li>Collaboration</li>
+                        <li>Usability Testing</li>
+                    </ul> -->
+            
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work-section" style="background: var(--bg-section);">
+        <div class="container">
+            <h2 class="section-title">My Work</h2>
+            <div class="work-grid">
+                <div class="project-card" onclick="showPage('bricklage')">
+                    <div class="project-image">
+                        <img src="Assets/Bricklage.png" alt="Bricklage Project">
+                    </div>
+                    <div class="project-info">
+                        <h3>Bricklage</h3>
+                        <p>A property buying and verification platform that allows users to browse, verify, and purchase properties with confidence through secure processes and loan options.</p>
+                        <a href="#" class="btn btn-primary" onclick="showPage('bricklage'); return false;">View Case Study</a>
+                    </div>
+                </div>
+                <div class="project-card" onclick="showPage('zappfix')">
+                    <div class="project-image">
+                        <img src="Assets/Zappfix.png" alt="Zappfix Project">
+                    </div>
+                    <div class="project-info">
+                        <h3>Zappfix</h3>
+                        <p>A service marketplace connecting customers with skilled technicians like electricians and plumbers, making it easy to find reliable professionals for repairs.</p>
+                        <a href="#" class="btn btn-primary" onclick="showPage('zappfix'); return false;">View Case Study</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Skills Section (formerly Why Me) - RENAMED -->
+    <section id="skills-section">
+        <div class="container">
+            <h2 class="section-title">My Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">👤</div>
+                    <h3>User-Centered Design</h3>
+                    <p>Every design decision starts with understanding user needs and behaviors</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">💼</div>
+                    <h3>Business-Focused Thinking</h3>
+                    <p>I align design solutions with business goals and measurable outcomes</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">✨</div>
+                    <h3>Clean UI Aesthetics</h3>
+                    <p>Beautiful interfaces that are both modern and highly functional</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔍</div>
+                    <h3>Research-Driven Decisions</h3>
+                    <p>Data and user research guide every design choice I make</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Me Section - NEW SECTION -->
+    <section id="why-section" style="background: var(--bg-section);">
+        <div class="container">
+            <div class="why-me-content">
+                <div class="why-me-card">
+                      <h2 class="section-title">Why Me</h2>
+                    <div class="why-me-highlight">
+                        <p>What sets me apart is how I approach problems. I blend <strong>empathy, structure, and curiosity</strong>, 
+                            always asking <strong>why</strong> before I design <strong>what</strong>.  <br>I live by one simple rule,
+                        <div class="quote-text">
+                            "If your grandma can use it, I've done my job right."
+                        </div>
+                    </div>
+                        </p>
+                        <div class="why-me-buttons">
+<a href="https://mail.google.com/mail/?view=cm&fs=1&to=ohiolemercy7@gmail.com" target="_blank" class="btn btn-primary">
+    Hire Me
+</a>
+                        </a>
+                        <a href="#work-section" onclick="scrollToSection('work-section'); return false;" class="btn btn-secondary">
+                            See My Work
+                        </a>
+                    </div>
+                </div>
+            </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- BRICKLAGE CASE STUDY PAGE -->
+<div id="bricklage" class="page">
+            <div class ="cover" style="width: 100vw; height: 400px; overflow: hidden; margin-left: calc(-50vw + 50%);">
+                <img src="Assets/Bricklage.png" alt="Bricklage Project" style="width: 100%; height: 100%; object-fit: cover;" >\
+                 <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.3);"></div>
+            </div>
+            <!--<p>Property buying and verification platform</p>
+            <div class="case-mockup">
+                <img src="C:\Users\USER\Downloads\Frame 1686563858.png" alt="Bricklage Project" style="width: 100%; height: 100%; object-fit: cover; border-radius: 24px;">
+            </div>-->
+             <section class="case-hero">
+        <div class="container">
+        <h1>Bricklage</h1>
+            <p>Property Purchase,Financing and verification platform</p>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>Project Overview</h2>
+            <p>Bricklage is a web platform that allows users to browse, verify, and purchase properties such as land and houses. It also provides access to loan options for users who cannot pay outright.</p>
+            <p style="margin-top: 1rem;"><strong>Target Users:</strong> Property buyers and real estate investors</p>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>Problem Statement</h2>
+            <p> Buyers juggle unverified listings and disconnected financing. Sellers can't find serious buyers, and lenders waste time on unqualified leads. The core problem is a lack of a secure, integrated platform that verifies authenticity and connects every piece of the transaction seamlessly.</p>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>Solution</h2>
+            <p>Design a platform that:</p>
+            <ul>
+                <li>Allows users to browse verified properties</li>
+                <li>Enables property verification requests</li>
+                <li>Provides loan application options</li>
+                <li>Offers a simple and transparent payment process</li>
+                <li>Role-Based Access: The platform supports different user roles—buyers, sellers, and financiers—each with tailored access and functionality. This ensures users only see information relevant to their goals while reducing unnecessary complexity.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>User Flow</h2>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <p>Sign up or log in</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <p>Browse properties</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <p>Select property</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <p>Request verification</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <p>Make payment</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">6</div>
+                    <p>Receive results</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">7</div>
+                    <p>Purchase or apply for loan</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>Key Screens</h2>
+            <div class="screens-grid">
+                <div class="screen-card">
+                    <div class="screen-icon"><img src="Assets/Buyersdashboard.png" alt="Buyer Dashboard"></div>
+                    <h3>Buyer Dashboard</h3>
+                </div>
+                <div class="screen-card">
+                    <div class="screen-icon"><img src="Assets/Marketplace.png" alt="Market Place"></div>
+                    <h3>Market Place</h3>
+                </div>
+                <div class="screen-card">
+                    <div class="screen-icon"><img src="Assets/Viewdetails.png" alt="View Details"></div>
+                    <h3>View Details</h3>
+                </div>
+                <div class="screen-card">
+                    <div class="screen-icon"><img src="Assets/Financing.png" alt="Financing Screen"></div>
+                    <h3>List of Financiers</h3>
+                </div>
+                <div class="screen-card">
+                    <div class="screen-icon"><img src="Assets/Financierdashboard.png" alt="Financierdashboard"></div>
+                    <h3>Financier Dashboard</h3>
+                </div>
+                <div class="screen-card">
+                    <div class="screen-icon"><img src="Assets/Createlisting.png" alt="Createlisting"></div>
+                    <h3>Sellers Create Listing Page</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>Design Decisions</h2>
+            <ul>
+                <li>A clean layout and visual hierarchy were used to reduce cognitive overload.</li>
+                <li>Clear card layout for property listings</li>
+                <li>Simple form structure for verification</li>
+                <li>user-friendly Interface</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>Outcome</h2>
+            <p>The design provides a secure and user-friendly way for buyers to explore properties, verify them, and proceed with confidence. Users can now make informed decisions with transparent information and multiple payment options.</p>
+            <div style="margin-top: 3rem; text-align: center;">
+                <a href="#" onclick="showPage('home')" class="btn btn-primary">← Back to Home</a>
+                <a href="#contact-section" onclick="showPage('home')" class="btn btn-secondary">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ZAPPFIX CASE STUDY PAGE -->
+<div id="zappfix" class="page">
+    <div class ="cover" style="width: 100vw; height: 400px; overflow: hidden; margin-left: calc(-50vw + 50%);">
+                <img src="Assets/Zappfix.png" alt="Bricklage Project" style="width: 100%; height: 100%; object-fit: cover;" >\
+                 <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.3);"></div>
+            </div>
+            <!--<p>Property buying and verification platform</p>
+            <div class="case-mockup">
+                <img src="C:\Users\USER\Downloads\Frame 1686563858.png" alt="Bricklage Project" style="width: 100%; height: 100%; object-fit: cover; border-radius: 24px;">
+            </div>-->
+             <section class="case-hero">
+        <div class="container">
+        <h1>Zappfix</h1>
+            <p>Property Purchase,Financing and verification platform</p>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>Project Overview</h2>
+            <p>Zappfix is a service marketplace that connects customers with skilled technicians such as electricians, plumbers, and repair specialists. It also allows technicians to create profiles and receive job requests.</p>
+            <p style="margin-top: 1rem;"><strong>Target Users:</strong> Customers needing repairs and technicians offering services</p>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>Problem Statement</h2>
+            <p>Finding reliable technicians is difficult and risky. Customers often rely on word-of-mouth without guarantees. Technicians also struggle to find steady work opportunities.</p>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>Solution</h2>
+            <p>Design a platform that:</p>
+            <ul>
+                <li>Allows customers to search for technicians</li>
+                <li>Enables technician profile creation</li>
+                <li>Supports job booking and requests</li>
+                <li>Provides transparent service listings</li>
+                <li>Supports communication between users and technicians, reducing delays and misunderstandings.</li>
+                <li>Supports dispute resolution, reinforcing trust and platform reliability.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>User Flow</h2>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <p>Sign up</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <p>Search for technician</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <p>View profile</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <p>Send service request</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <p>Technician accepts</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">6</div>
+                    <p>Service completed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>Key Screens</h2>
+            <div class="screens-grid">
+        
+                <div class="screen-card">
+                    <div class="screen-icon"> <img src="Assets/Book.png" alt="Book Technician"> </div>
+                    <h3>Book Technician</h3>
+                </div>
+                <div class="screen-card">
+                    <div class="screen-icon"><img src="Assets/Chat screen.png" alt="Chat Screen"></div>
+                    <h3>Chat Screen</h3>
+                </div>
+                <div class="screen-card">
+                    <div class="screen-icon"><img src="Assets/Submit.png" alt="Submit Dispute"></div>
+                    <h3>Submit Dispute</h3>
+                </div>
+                <div class="screen-card">
+                    <div class="screen-icon"><img src="Assets/Technician.png" alt="Technicians"></div>
+                    <h3>Technicians</h3>
+                </div>
+                <div class="screen-card">
+                    <div class="screen-icon"> <img src="Assets/Wallet.png" alt="Book Technician"> </div>
+                    <h3>Book Technician</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>Design Decisions</h2>
+            <ul>
+                <li>Clean card-based layout for technicians</li>
+                <li>Simple booking process</li>
+                <li>Emphasis on profile trust elements</li>
+                <li>Clear navigation for both user types</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="case-section">
+        <div class="container">
+            <h2>Outcome</h2>
+            <p>Zappfix simplifies how customers find skilled workers and helps technicians get more jobs through a digital platform. The design creates trust between both parties and streamlines the entire hiring process.</p>
+            <div style="margin-top: 3rem; text-align: center;">
+                <a href="#" onclick="showPage('home'); return false;" class="btn btn-primary">← Back to Home</a>
+                <a href="#contact-section" onclick="showPage('home'); return false;" class="btn btn-secondary">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-links">
+      <a href="#home" onclick="showPage('home'); return false;">Home</a>
+      <a href="#about-section" onclick="scrollToSection('about-section'); return false;">About</a>
+      <a href="#work-section" onclick="scrollToSection('work-section'); return false;">Projects</a>
+      <a href="#skills-section" onclick="scrollToSection('skills-section'); return false;">My Skills</a>
+      <a href="#why-section" onclick="scrollToSection('why-section'); return false;">Why Me</a>
+      <a href="#contact-section" onclick="scrollToSection('contact-section'); return false;">Contact</a>
+    </div>
+    <p class="footer-copy">
+      &copy; 2026 Mercy. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+<script>
+    function showPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+        
+        // Show selected page
+        document.getElementById(pageId).classList.add('active');
+        
+        // Scroll to top
+        window.scrollTo(0, 0);
+        
+        // Close mobile menu if open
+        closeMenu();
+    }
+    
+    function scrollToSection(sectionId) {
+        if (document.getElementById('home').classList.contains('active')) {
+            // If on home page, scroll to section
+            document.getElementById(sectionId).scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        } else {
+            // If on case study page, go to home page first
+            showPage('home');
+            setTimeout(() => {
+                document.getElementById(sectionId).scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 100);
+        }
+        
+        // Close mobile menu if open
+        closeMenu();
+    }
+    
+    // Mobile menu functionality
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    
+    function toggleMenu() {
+        navMenu.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+        menuToggle.innerHTML = navMenu.classList.contains('active') ? 
+            '<i class="fas fa-times"></i>' : 
+            '<i class="fas fa-bars"></i>';
+    }
+    
+    function closeMenu() {
+        navMenu.classList.remove('active');
+        menuToggle.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+    }
+    
+    // Close menu when clicking on overlay
+    menuOverlay.addEventListener('click', closeMenu);
+    
+    // Close menu when clicking on a link
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+    
+    // Handle initial page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if there's a hash in the URL
+        const hash = window.location.hash;
+        if (hash) {
+            const pageId = hash.replace('#', '');
+            if (pageId === 'bricklage' || pageId === 'zappfix') {
+                showPage(pageId);
+            }
+        }
+        
+        // Close menu on window resize if it's open on desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
+                closeMenu();
+            }
+        });
+        
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') === '#') return;
+                
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#') && targetId !== '#') {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
